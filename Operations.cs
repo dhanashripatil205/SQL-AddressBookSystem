@@ -180,9 +180,9 @@ namespace AddressBook
                     break;
 
                 }
-           }
+            }
         }
 
-    }
+   }
 
 }
