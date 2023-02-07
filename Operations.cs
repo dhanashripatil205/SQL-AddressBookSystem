@@ -35,8 +35,8 @@ namespace AddressBook
                     throw new ArgumentNullException("First name can not be null.");
                 }
 
-               //adding linq
-                bool duplicate = Personlist.Any(cus => cus.fname == person.fname);
+               
+                bool duplicate = Personlist.Exists(e => e.fname == person.fname);
                 
                     if (duplicate)
                          throw new ArgumentNullException("Another person by the same name exists in the Address Book");
@@ -63,7 +63,33 @@ namespace AddressBook
             Console.WriteLine("\n");
         }
 
-       
+         public void search()
+        {
+            Console.WriteLine();
+            Console.WriteLine("enter city");
+            string cityname = Console.ReadLine();
+            foreach (var p in Personlist.FindAll(e => e.city == cityname))
+            {
+               
+                    Console.WriteLine("the person_name in current state is : " + p.fname);
+                  
+                
+            }
+            Console.WriteLine();
+            Console.WriteLine("enter state");
+            string statename = Console.ReadLine();
+           
+           
+            foreach (var p in Personlist.FindAll( e=> e.state == statename))
+            {
+              
+                  
+                    Console.WriteLine("the person_name in current state is : " + p.fname);
+              
+                
+            }
+            Console.WriteLine();
+        }
 
         public void display()
         {
@@ -211,4 +237,4 @@ namespace AddressBook
         }
     }
 
-}
+} 
