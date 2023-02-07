@@ -25,6 +25,7 @@ namespace Adv_AddressBook
                 Console.WriteLine("3 to Update details of a contact that already exists");
                 Console.WriteLine("4 to Delete a contact");
                 Console.WriteLine("5 to Get contacts by city or state");
+                Console.WriteLine("6 to Get contacts by CERTAIN PERIOD");
                 Console.WriteLine("0 to EXIT");
                 option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
@@ -34,26 +35,40 @@ namespace Adv_AddressBook
                         int count = Convert.ToInt32(Console.ReadLine());
                         for (int i = 0; i < count; i++)
                         {
-                            program.InsertContact();
+                            
+                            Thread thr = new Thread(new ThreadStart(program.InsertContact));
+                             thr.Start();
                         }
                         break;
                     case 2:
-                        program.DisplayAllDetails();
+                       // program.DisplayAllDetails();
+                        Thread thr = new Thread(new ThreadStart(program.DisplayAllDetails));
+                             thr.Start();
                         break;
                     case 3:
-                        program.UpdateDetails();
+                       // program.UpdateDetails();
+                         Thread thr = new Thread(new ThreadStart(program.UpdateDetails));
+                             thr.Start();
                         break;
                     case 4:
-                        program.RemoveContact();
+                       // program.RemoveContact();
+                         Thread thr = new Thread(new ThreadStart(program.RemoveContact));
+                             thr.Start();
                         break;
                     case 5:
                         List<string> Names = program.ContactsByCityOrState();
                         foreach (string name in Names)
                         {
                             contact = program.GetDetailsForAName(name);
-                            program.DisplayDetails(contact);
+                           // program.DisplayDetails(contact);
+                             Thread thr = new Thread(new ThreadStart(program.DisplayDetails(contact)));
+                             thr.Start();
                         }
                         break;
+                        case 6:
+                        //program.DisplayAllDetails_Period();
+                         Thread thr = new Thread(new ThreadStart(program.DisplayAllDetails_Period));
+                             thr.Start();
                     default:
                         break;
                 }
@@ -117,6 +132,24 @@ namespace Adv_AddressBook
         public void DisplayAllDetails()
         {
             SPstr = "dbo.DisplayAllDetails";
+            SqlCommand cmd = new SqlCommand(SPstr, connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Contacts contact = new Contacts();
+                    WriteToContactsClass(contact, reader);
+                    DisplayDetails(contact);
+                }
+            }
+            reader.Close();
+
+        }
+         public void DisplayAllDetails_Period()
+        {
+            SPstr = "dbo.DisplayParticularPeriod_data";
             SqlCommand cmd = new SqlCommand(SPstr, connection);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataReader reader = cmd.ExecuteReader();
