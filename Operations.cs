@@ -57,7 +57,8 @@ namespace AddressBook
                 Console.WriteLine("\n");
             }
         }
-   public void edit()
+
+           public void edit()
         {
             Console.WriteLine("-------------Edit Operation-----------");
             Console.WriteLine("Enter a number to edit");
@@ -163,6 +164,25 @@ namespace AddressBook
                 default: Console.WriteLine("enter valid option");
                     break;
             }
+
         }
+
+        public void delete()
+        {
+            Console.WriteLine("-------------Delete Operation-----------");
+            Console.WriteLine("enter the Person name which you want to delete :");
+            string cfname= Console.ReadLine();
+            foreach (var p in Program.Personlist)
+            {
+                if (p.fname == cfname)
+                {
+                    Program.Personlist.Remove(p);
+                    break;
+
+                }
+            }
+        }
+
     }
+
 }
