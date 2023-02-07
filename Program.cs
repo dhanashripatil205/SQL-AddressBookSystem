@@ -5,7 +5,9 @@ namespace AddressBook
         public static void Main(string[] args)
         {           
             Operations operations = new Operations();
-            operations.addPerson();     
+            operations.addPerson(); 
+            operations.edit();
+
         }
     }
 }
